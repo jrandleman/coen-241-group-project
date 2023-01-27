@@ -1,0 +1,1 @@
+Potential Scraper for [cricbuzz.com](https://www.cricbuzz.com): [here](https://github.com/mskian/cricket-api-nodejs)
