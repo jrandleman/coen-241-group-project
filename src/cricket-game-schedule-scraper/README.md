@@ -1,4 +1,4 @@
-# Running the Cricbuzz Livematch Scraper
+# Running the Cricbuzz Livematch Schedule Scraper
 
 ## Dependencies: 
 
