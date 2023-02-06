@@ -97,7 +97,6 @@ async function parseData($) {
       if(idx == 0) {
         matchDateString = $(ref).text();
         parsedData[matchDateString] = [];
-        // console.log(matchDateString);
       // Parse the live match(es) on said date
       } else {
         parseMatchDayContents($,parsedData,matchDateString,ref);
