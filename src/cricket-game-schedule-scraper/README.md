@@ -1,12 +1,12 @@
 # Running the Cricbuzz Livematch Scraper
 
-## Dependancies: 
+## Dependencies: 
 
 1. [node.js](https://nodejs.org/en/download/)
 2. [cheerio](https://www.npmjs.com/package/cheerio)
 3. [node-fetch](https://www.npmjs.com/package/node-fetch)
 
-## Execute: 
+## Execute at the Command-Line: 
 `node main.mjs`
 
 ## Result: 
