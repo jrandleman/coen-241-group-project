@@ -87,7 +87,7 @@ function parseMatchDayContents($, parsedData, matchDateString, ref) {
 
 
 // Returns an object: {'date': [<CricketMatch-object>, ...], ...}
-async function parseData($) {
+function parseData($) {
   const parsedData = {};
   const matchDayRows = $(`#${INTERNATIONAL_SCHEDULE_TABLE_ID} > div`);
   matchDayRows.each((idx,ref) => {
@@ -116,7 +116,7 @@ async function main() {
   try {
     const response = await fetch(CRICBUZZ_INTERNATIONAL_SCHEDULE_URL);
     const html = await response.text();
-    const results = await parseData(cheerio.load(html));
+    const results = parseData(cheerio.load(html));
     console.log(JSON.stringify(results,null,2));
   } catch(err) {
     console.error(`Couldn't parse cricbuzz! Error: ${err}`);
