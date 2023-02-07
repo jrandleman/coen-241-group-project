@@ -73,8 +73,9 @@ function parseMatchDayContents($, parsedData, matchDateString, ref) {
       const matchSeriesData = $(ref);
       matchSeriesData.children().each((idx,ref) => {
         if(idx % 2 == 0) {
-          matchName = $(ref).find('a').text();
-          matchUrl = `https://www.cricbuzz.com${$(ref).find('a').attr('href')}`;
+          const matchLink = $(ref).find('a');
+          matchName = matchLink.text();
+          matchUrl = `https://www.cricbuzz.com${matchLink.attr('href')}`;
         } else {
           const matchTime = $(ref).text().trim();
           parsedData[matchDateString].push(new CricketMatch(matchName, matchUrl, matchTime));
