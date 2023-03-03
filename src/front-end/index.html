@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Player Search</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <div class="container">
+      <h1>Player Search</h1>
+      <form>
+        <label for="player">Player:</label>
+        <input type="text" id="player" name="player" placeholder="Enter player name">
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" placeholder="Enter country name">
+
+        <button type="button" onclick="compareData(),makeApiCall()" >Submit</button>
+       </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
