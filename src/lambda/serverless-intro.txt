@@ -1,0 +1,20 @@
+Things to understand while building serverless app with aws lambda:
+- a basic frontend which is used to call APIgateway URL (used axios)
+links : https://www.geeksforgeeks.org/how-to-make-get-call-to-an-api-using-axios-in-javascript/
+- Create a basic HelloWorld function to understand how lambda works (There's a hello world template you can work with in the lambda functions)
+- Learnt how to upload a serverless function(nodejs with dependencies) using export handler function (.zip file after running the node js )
+- setting up a lambda trigger using an apigateway (https://www.udemy.com/course/build-a-serverless-app-with-aws-lambda-hands-on/)
+- debug: CORS permissions, dependencies, time out(configurations - increase timeout)
+
+How to create a node js function in aws lambda (step by step):
+1. First test run your function on your local machine and build it using node, establishing all the node modules and dependencies associated with it.
+2. Create a function using a Name(function-name) with settings as (author from scratch, runtme: nodejs latest version, architecture (x86_64)- similar to your local machine used to setup the node dependencies)
+3. Then you can see the basic Hello World! code as default, you can test it and try to understand how it works by altering it and playing around.
+4. Now in our local machine go the local folder where the node js app was build, and inside that folder zip the code along with its dependencies directly into a zip file named after the function-name.
+5. Upload it using .zip in the code tab of the function.
+6. see to it that the handler function is setup correctly.
+7. test (check timeout and dependencies probably if anything goes wrong)
+8. add an API gateway (create an API, REST, open)
+9. debug (maybe CORS permissions in the API gateway actions tab of the selected API, and enable cors over 400 and 500 and allow all - ofcourse just for the purpose of this project)
+10. Use the api gateway url to make a get request. (I tried to make a POST request using the player and country data but I can't seem to make it work, I have to go into more depth, so for this project purposes we can use the db to access and check data)
+
