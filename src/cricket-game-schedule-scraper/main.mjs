@@ -21,6 +21,8 @@
       * NOTE: BIG DATE NAMES ON TOP OF ROW SEEM TO INDICIATE DATE IN GMT, WHICH PAIRS NICELY WITH THE GMT TIME DESIGNATION
         - MAY WANT TO MENTION THIS "GMT" TIMEZONE IN THE "PARSED OBJECTS" OBJECT RETURNED BY THIS CODE!
 
+   => UPDATE**2: TURNS OUT "GMT" AND "UTC" TIMES ARE IDENTICAL!
+
 */
 
 
@@ -49,18 +51,67 @@ const INTERNATIONAL_SCHEDULE_TABLE_ID = 'international-list';
 
 
 //////////////////////////////////////////////////////////////////////////////
+// HELPER FUNCTIONS
+//////////////////////////////////////////////////////////////////////////////
+
+// Whether have the "(Mar 8)" version of the 2 commented examples above the 
+// helper functions below
+function needsDateChange(matchReadableTime) {
+  const gmtTime = matchReadableTime.split(' / ')[0];
+  return gmtTime.split('(').length > 1;
+}
+
+
+// e.g. "10:00 PM GMT (Mar 08) / 11:00 AM LOCAL" (must adjust date)
+function synthesizeDateTimeWithChange(matchDateString, matchReadableTime) {
+  return (new Date(matchReadableTime.split(' / ')[0].replace('(',' ').replace(')',' ') + ' ' + matchDateString.split(' ')[2])).toJSON();
+}
+
+
+// e.g. "08:00 AM GMT / 10:00 AM LOCAL" (can just parse date directly)
+function synthesizeDateTimeWithoutChange(matchDateString, matchReadableTime) {
+  return (new Date(matchDateString + ' ' + matchReadableTime.split(' / ')[0])).toJSON();
+}
+
+
+// Convert time+date to a UTC 'new Date()' JSON style string
+function getMatchDateTime(matchDateString, matchReadableTime) {
+  if(needsDateChange(matchReadableTime)) {
+    return synthesizeDateTimeWithChange(matchDateString,matchReadableTime);
+  } else {
+    return synthesizeDateTimeWithoutChange(matchDateString,matchReadableTime);
+  }
+}
+
+
+function convertParsedDataToDatabaseEntries(parsedData) {
+  const dbEntries = {};
+  for(const entry of parsedData) {
+    const key = entry.dateTime.split('T')[0];
+    if(dbEntries[key] == undefined) {
+      dbEntries[key] = [];
+    }
+    dbEntries[key].push(entry);
+  }
+  return dbEntries;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
 // CHEERIO OBJECT PARSING LOGIC
 //////////////////////////////////////////////////////////////////////////////
 
 // Simple thrupple wrapper
 class CricketMatch {
-  constructor(name, url, time) {
+  constructor(name, url, matchDateString, readableTime, dateTime) {
     const nameSections = name.split(' vs ');
     this.matchName = name;
     this.country1 = nameSections[0];
     this.country2 = nameSections[1].split(',')[0];
     this.url = url;
-    this.time = time;
+    this.readableDate = matchDateString;
+    this.readableTime = readableTime;
+    this.dateTime = dateTime;
   }
 };
 
@@ -80,8 +131,9 @@ function parseMatchDayContents($, parsedData, matchDateString, ref) {
           matchName = matchLink.text();
           matchUrl = `https://www.cricbuzz.com${matchLink.attr('href')}`;
         } else {
-          const matchTime = $(ref).text().trim();
-          parsedData[matchDateString].push(new CricketMatch(matchName, matchUrl, matchTime));
+          const matchReadableTime = $(ref).text().trim();
+          const matchDateTime = getMatchDateTime(matchDateString,matchReadableTime);
+          parsedData.push(new CricketMatch(matchName, matchUrl, matchDateString, matchReadableTime, matchDateTime));
         }
       });
     }
@@ -91,7 +143,7 @@ function parseMatchDayContents($, parsedData, matchDateString, ref) {
 
 // Returns an object: {'date': [<CricketMatch-object>, ...], ...}
 function parseData($) {
-  const parsedData = {};
+  const parsedData = [];
   const matchDayRows = $(`#${INTERNATIONAL_SCHEDULE_TABLE_ID} > div`);
   matchDayRows.each((idx,ref) => {
     let matchDateString = null;
@@ -99,15 +151,14 @@ function parseData($) {
     matchDayEntries.children().each((idx,ref) => {
       // Save the date
       if(idx == 0) {
-        matchDateString = $(ref).text();
-        parsedData[matchDateString] = [];
+        matchDateString = $(ref).text().split(',')[1].trim();
       // Parse the live match(es) on said date
       } else {
         parseMatchDayContents($,parsedData,matchDateString,ref);
       }
     });
   });
-  return parsedData;
+  return convertParsedDataToDatabaseEntries(parsedData);
 }
 
 
