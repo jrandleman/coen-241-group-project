@@ -55,7 +55,10 @@ const INTERNATIONAL_SCHEDULE_TABLE_ID = 'international-list';
 // Simple thrupple wrapper
 class CricketMatch {
   constructor(name, url, time) {
-    this.name = name;
+    const nameSections = name.split(' vs ');
+    this.matchName = name;
+    this.country1 = nameSections[0];
+    this.country2 = nameSections[1].split(',')[0];
     this.url = url;
     this.time = time;
   }
