@@ -1,3 +1,17 @@
+# ALTERED TO WORK ON A DOWNLOADED HTML PAGE HOLDING LIVE PLAYER DATA
+
+Works with the HTML page in: `coen-241-group-project/downloaded-html/jordan/batter.html`
+
+Instructions to execute:
+1. Rename `batter.html` from the above path file to be `index.html`
+2. Run `php -S localhost:8080` in the local directory where you have `index.html`
+   * Make sure you have `php` installed on the system!
+   * This will host the downloaded html page on `http://localhost:8080`
+3. Go to `coen-241-group-project/src/cricket-api-nodejs-downloaded-html`
+4. Run `node index.js`
+5. In your browser, go to `http://localhost:3000/score?url=http://localhost:8080`
+
+
 # Free Cricket API 🏏  
 
 [![Github Workflow](https://github.com/mskian/cricket-api-nodejs/workflows/server-test/badge.svg)](https://github.com/mskian/cricket-api-nodejs/actions)  

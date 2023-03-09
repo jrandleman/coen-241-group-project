@@ -47,10 +47,6 @@ router.get('/', cache('2 minutes'), apiRequestLimiter, function(req, res) {
 
         const [batter1, batter2] = $("a[ng-bind=\"batsmen.batName\"]").map(function(){ return $(this).text() }).get();
         const [bowler1, bowler2] = $("a[ng-bind=\"bowler.bowlName\"]").map(function(){ return $(this).text() }).get();
-        console.log(`batter1 = ${batter1}`);
-        console.log(`batter2 = ${batter2}`);
-        console.log(`bowler1 = ${bowler1}`);
-        console.log(`bowler2 = ${bowler2}`);
 
         var livescore = ({
             batter1: batter1 || "Data Not Found",
@@ -58,6 +54,8 @@ router.get('/', cache('2 minutes'), apiRequestLimiter, function(req, res) {
             bowler1: bowler1 || "Data Not Found",
             bowler2: bowler2 || "Data Not Found"
         });
+
+        console.log(JSON.stringify(livescore, null, 4));
 
         res.send(JSON.stringify(livescore, null, 4));
 
