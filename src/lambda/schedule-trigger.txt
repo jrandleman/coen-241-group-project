@@ -1,0 +1,39 @@
+Using EventBridge:
+	Source: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-run-lambda-schedule.html
+	After creating a Lambda function, do the following: 
+	1. Go to EventBridge console => Rules => Create Rule
+	2. Give rule a name/description and keep default event bus and "Schedule (a rule that runs on a schedule)" under Type. Click next.
+	3. Pick schedule pattern (rate or specific time)
+	4. Choose AWS service (Lambda function) as a target and specify the function you want to target.
+	This can be used to schedule the time directly from the EventBridge console but is not automated enough for our intended purposes. However, we could return to our original idea of running the ScheduleScraper once a day/week easily using EventBridge rules. 
+
+Alternative option: from AWS CLI (same source as above):
+	Use the put-rule command with the name of the rule and the schedule expression to create the rule:
+		aws events put-rule \
+		--name my-scheduled-rule \
+		--schedule-expression 'rate(5 minutes)'
+	Use add-permission to run the scheduled event 
+		aws lambda add-permission \
+		--function-name LogScheduledEvent \
+		--statement-id my-scheduled-event \
+		--action 'lambda:InvokeFunction' \
+		--principal events.amazonaws.com \
+		--source-arn arn:aws:events:us-east-1:123456789012:rule/my-scheduled-rule
+	Create targets.json file with contents in this format:
+		[
+  		   {
+    			"Id": "1", 
+    			"Arn": "arn:aws:lambda:us-east-1:123456789012:function:LogScheduledEvent"
+		   }
+		]
+	Add function to the rule: 
+		aws events put-targets --rule my-scheduled-rule --targets file://targets.json
+
+This may be an interesting option to explore, as we could potentially write, for example, a shell script to run these commands from our main EC2 instance (assuming it has permission to create rules) with command line input that determines the rule name (and instead of a rate the specific date we want the function to run at (game start time, then every 5 minutes, for example). However, I am not entirely sure how we would pass the query URL to the Lambda function from here, which we would need to do. I have written a sample script and will test it using an EC2 instance. 
+
+
+Scheduling a Lambda Function from another Lambda Function:
+Source: https://blog.bitsrc.io/aws-lambda-function-that-dynamically-schedules-its-next-runtime-e971fca6b6f6
+	I have explored some potential solutions for this but they seem too inflexible to schedule another lambda function based on some arbitrary date. 
+
+Also, it doesn't make sense to schedule the player scraper from the schedule scraper. The schedule scraper simply doesn't have the information that we want. In the player scraper, we want to target one particular live URL (and one particular user/email). The schedule scraper itself does not have information about the user or what specific player they are interested in. Even though it is the function that gets the game times and live URLs, it does not know which one to pass when scheduling the player scraper, nor does it have any user information. For this reason, I cannot recommend scheduling the player scraper from the current iteration of the schedule scraper. 
