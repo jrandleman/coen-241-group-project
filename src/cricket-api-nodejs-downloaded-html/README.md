@@ -10,6 +10,7 @@ Instructions to execute:
 3. Go to `coen-241-group-project/src/cricket-api-nodejs-downloaded-html`
 4. Run `node index.js`
 5. In your browser, go to `http://localhost:3000/score?url=http://localhost:8080`
+   * The webpage will display JSON with both batter and bowler names!
 
 
 # Free Cricket API 🏏  
