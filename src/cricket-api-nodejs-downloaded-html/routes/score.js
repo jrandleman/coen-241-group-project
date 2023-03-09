@@ -45,14 +45,14 @@ router.get('/', cache('2 minutes'), apiRequestLimiter, function(req, res) {
 
         $ = cheerio.load(response.data);
 
-        const [batter1, batter2] = $("a[ng-bind=\"batsmen.batName\"]").map(function(){ return $(this).text() }).get();
-        const [bowler1, bowler2] = $("a[ng-bind=\"bowler.bowlName\"]").map(function(){ return $(this).text() }).get();
+        const [batsman, batsmantwo] = $("a[ng-bind=\"batsmen.batName\"]").map(function(){ return $(this).text() }).get();
+        const [bowler, bowlertwo] = $("a[ng-bind=\"bowler.bowlName\"]").map(function(){ return $(this).text() }).get();
 
         var livescore = ({
-            batter1: batter1 || "Data Not Found",
-            batter2: batter2 || "Data Not Found",
-            bowler1: bowler1 || "Data Not Found",
-            bowler2: bowler2 || "Data Not Found"
+            batsman: batsman || "Data Not Found",
+            batsmantwo: batsmantwo || "Data Not Found",
+            bowler: bowler || "Data Not Found",
+            bowlertwo: bowlertwo || "Data Not Found"
         });
 
         console.log(JSON.stringify(livescore, null, 4));
