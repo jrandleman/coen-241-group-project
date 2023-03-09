@@ -25,7 +25,7 @@ function compareData() {
 }
 
 function makeApiCall() {
-      axios.get('https://nwcbl6ia43.execute-api.us-east-1.amazonaws.com/default/cricketMatches/pleaseremovethisbeforerunning')
+      axios.get('https://98azzq6cyd.execute-api.us-east-1.amazonaws.com/default/schedulescraper')
 .then((response) => {
   console.log(response.data);
   alert('API call successful!');
