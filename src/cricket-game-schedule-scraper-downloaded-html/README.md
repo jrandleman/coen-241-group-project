@@ -1,15 +1,6 @@
 # ALTERED TO WORK ON A DOWNLOADED HTML PAGE HOLDING CRICKET MATCH SCHEDULE
 
-Works with the HTML page in: `coen-241-group-project/downloaded-html/jordan/schedule.html`
-
-Instructions to execute:
-1. Rename `schedule.html` from the above path file to be `index.html`
-2. Run `php -S localhost:8081` in the local directory where you have `index.html`
-   * Make sure you have `php` installed on the system!
-   * This will host the downloaded html page on `http://localhost:8081`
-3. Go to `coen-241-group-project/src/cricket-game-schedule-scraper-downloaded-html`
-4. Run `node main.mjs`
-5. The schedule from the downloaded HTML page (the one running on port 8081) is returned as JSON!
+The contents of `coen-241-group-project/downloaded-html/jordan/schedule.html` have been hardcoded into the `main.mjs` file in order to be able to scrape the downloaded code without having to depend on `node-fetch` or having to host `schedule.html` on some other port to be requested like a regular link.
 
 
 # Running the Cricbuzz Livematch Schedule Scraper
