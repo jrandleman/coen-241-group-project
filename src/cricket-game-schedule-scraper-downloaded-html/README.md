@@ -1,6 +1,6 @@
 # ALTERED TO WORK ON A DOWNLOADED HTML PAGE HOLDING CRICKET MATCH SCHEDULE
 
-The contents of `coen-241-group-project/downloaded-html/jordan/schedule.html` have been hardcoded into the `main.mjs` file in order to be able to scrape the downloaded code without having to depend on `node-fetch` or having to host `schedule.html` on some other port to be requested like a regular link.
+The contents of `coen-241-group-project/downloaded-html/jordan/schedule.html` have been hardcoded into the `main.mjs` file in order to be able to scrape the downloaded code without having to depend on `node-fetch` or having to host `schedule.html` on some other port to be requested by `main.mjs` like a regular link.
 
 
 # Running the Cricbuzz Livematch Schedule Scraper
