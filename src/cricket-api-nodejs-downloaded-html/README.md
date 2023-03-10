@@ -12,7 +12,8 @@ Instructions to execute:
 3. Go to `coen-241-group-project/src/cricket-api-nodejs-downloaded-html`
 4. Run `node index.js`
 5. In your browser, go to `http://localhost:3000/score?url=http://localhost:8080`
-   * The webpage will display JSON with both batter and bowler names (id the game is ongoing)!
+   * The webpage will display JSON with both batter and bowler names (but only if the game is ongoing)!
+     - If the game already ended (e.g. `batter_done.html` is being parsed), each player name JSON entry will just be `"Data Not Found"`
 
 
 # Free Cricket API 🏏  
