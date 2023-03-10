@@ -1,3 +1,27 @@
+# Found GitHub Code Equivalent to Parse Live Player Data (only to be used during the Monday presentation)
+
+## Execution: `node index.js`
+* This will return a JSON object holding the live player data in the form:
+  ```json
+  {
+       "batsman": "Travis Head",
+       "batsmantwo": "Usman Khawaja",
+       "bowler": "Umesh Yadav",
+       "bowlertwo": "Mohammed Shami"
+   }
+  ```
+
+## Notes:
+* Uncomment `// $ = cheerio.load(GAME_OVER_HTML);` in the code to instead parse "finished game" state data.
+
+
+## When integrating with a lambda function:
+* Have the lambda function email the user that their favorite player has been found IFF their favorite player is in any of the above JSON fields.
+
+
+
+
+<!-- ====== OLD README ======
 # ALTERED TO WORK ON A DOWNLOADED HTML PAGE HOLDING LIVE PLAYER DATA
 
 Works with the HTML pages in: 
@@ -126,3 +150,4 @@ All Credits Goes to <https://www.cricbuzz.com/>
 ## LICENSE 📕
 
 MIT
+ -->
