@@ -31,7 +31,7 @@ Alternative option: from AWS CLI (same source as above):
 
 This may be an interesting option to explore, as we could potentially write, for example, a shell script to run these commands from our main EC2 instance (assuming it has permission to create rules) with command line input that determines the rule name (and instead of a rate the specific date we want the function to run at (game start time, then every 5 minutes, for example). However, I am not entirely sure how we would pass the query URL to the Lambda function from here, which we would need to do. I have written a sample script and will test it using an EC2 instance. 
 UPDATE: the script works for a test lambda function, now what we need to do is adjust it so that it can take command line input to make unique rules for each user/player request made, and so that the cron expression when it runs matches the match start time (and also to run repeatedly after that time, which may need an additional program to implement). 
-
+UPDATE 3/11: I was able to configure the event to pass an input JSON file with the basic DB-template Lambda function in order to put the information into a database, and the database was successfully updated. 
 
 Scheduling a Lambda Function from another Lambda Function:
 Source: https://blog.bitsrc.io/aws-lambda-function-that-dynamically-schedules-its-next-runtime-e971fca6b6f6
