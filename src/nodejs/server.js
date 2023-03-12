@@ -65,23 +65,39 @@ app.post('/compareData', (req, res) => {
           ///////////////////////////////
           // Run the script and send data to stdin
           const hi = "Hi from script file ----"
+	  //ALL VARIABLES BELOW WITHOUT SPECIFIC COMMENTS MUST BE PARSED FROM SCHEDULER SCRAPER RETURN JSON
           const URL="https://www.cricbuzz.com/live-cricket-score/60028/ind-vs-aus-4th-test-day-4-australia-tour-of-india-2023"
-          const ARN="example"
-          const topic="Mytopic"
-          const player="Player Name"
-          const uniqueID="random stuff"
-          const childtest = exec(`echo '[{"Id": "1","Arn": "${ARN}","Input":"{\"Topic\": \"${topic}\",\"Player\":\"${player}\",\"URL\":\"${URL}\",\"ID\":\"${uniqueID}\"}"}]' > targets.json`,(error, stdout, stderr) => {
+          const ARN="arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper" //THIS CAN STAY (NO NEED TO GET FROM JSON FILE)
+          const topic="ServerPowerTest1" //THIS WILL BE RANDOMLY-ISH GENERATED (MUST HAVE HUMAN_REASONABLE NAME THOUGH)
+          const player="Virat Kohli" //FROM USER INPUT
+          const uniqueID="random stuff" //THIS WILL BE UNIQUELY GENERATED (WITH HASH?)
+          const childtest = exec(`echo '[{"Id": "1","Arn": "${ARN}","Input":"{\\\"Topic\\\": \\\"${topic}\\\",\\\"Player\\\":\\\"${player}\\\",\\\"URL\\\":\\\"${URL}\\\",\\\"ID\\\":\\\"${uniqueID}\\\"}"}]' > targets.json`,(error, stdout, stderr) => {
             if (error) {
-              console.error(`Error running script: ${error}`);
+              console.error(`Error creating json: ${error}`);
               return;
             }
-            console.log(`Script output: ${stdout}`);
+            //console.log(`Script output: ${stdout}`);
           });
           childtest.stdin.end();
+          //VARIABLES IN THIS SECTION WILL ALSO NEED TO BE PARSED FROM THE UTC TIME IF NOT HAVING A SPECIFIC COMMENT
+          const statement="superUnique1"
+          const hour=6
+          const day=12
+          const month=3
+          const year=2023
+          const email="shanna@scu.edu" //FROM USER INPUT
+          const scheduleStuff=exec(`sh scheduler.sh ${topic} ${statement} ${hour} ${day} ${month} ${year} ${player} ${email}`,(error,stdout,stderr) => {
+	    if (error) {
+              console.error(`Error running scheduler.sh: ${error}`);
+              return;
+            }
+          });
+          scheduleStuff.stdin.end();
+          
           //const output = execSync('ls', { encoding: 'utf-8' });  // the default is 'buffer'
           //console.log('Output was:', output); // we got data.json
 
-          const child = exec(`./myscript.sh ${hi}`,(error, stdout, stderr) => {
+          const child = exec(`sh myscript.sh ${hi}`,(error, stdout, stderr) => {
             if (error) {
               console.error(`Error running script: ${error}`);
               return;
