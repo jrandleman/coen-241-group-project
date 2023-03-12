@@ -9,10 +9,13 @@ setup an ec2 instance on windows (create a ppk key pair and download putty)
 - Now you can test it by using the test server index.html page which can be accessed using the your-public-ip(without https) (idk why) (use this command to check ip: curl http://checkip.amazonaws.com/)
 - Basically the apache server is setup in such a way that /var/www/html has all the website files, right now if you move into this directory you'll only have an index.html test apache server file. 
 - COngratulations, you setup the server, now you need your website files in the webserver, i.e., at /var/www/html
+- Activate permissions: sudo chmod -R 755 /var/www/html
 
 command to copy over the code from local machine to ec2 instance web server:
 (using putty keygen setup .pem file for the .ppk file)
 scp -i C:\Users\venka\Downloads\hosting.pem -r C:\Users\venka\Documents\front-end\* ubuntu@ec2-54-196-225-251.compute-1.amazonaws.com:/var/www/html/
+nodejs server:
+scp -i C:\Users\venka\Downloads\hosting.pem -r C:\Users\venka\Documents\nodejs ubuntu@ec2-52-91-127-223.compute-1.amazonaws.com:/home/ubuntu/
 
 you can use the above command to understand a few things
 - need the key in .pem file format
