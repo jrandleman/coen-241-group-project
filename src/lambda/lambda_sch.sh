@@ -1,25 +1,45 @@
 #Setup: aws configure with Key/Secret Key (can be created easily for IAM users or less securely for root users in "Security Credentials" under your username
-#region: whatever region your event/lambda function will be in
-#default output format (just click enter and it will be JSON by default)
+#	region: whatever region your event/lambda function will be in
+#	default output format (just click enter and it will be JSON by default)
 
-#$1: rule name, $2: statement
 
-#Command-line arguments are <user (email?)> <player> <date from DB> <URL from DB>
-rule="testing" #need to have a unique rule/statement name for everything, but hardcoded for the test
-statement="test3"
+#interval: how often to run (minutes) in a game, length: length of the game (hours)
+interval=5
+length=3
 
-aws events put-rule --name $1 --schedule-expression "cron(51 23 * * ? *)" #this currently runs at 12:00 PST (want to have more dynamic and specific input to this for real usage)
 
-aws lambda add-permission --function-name LivePlayerScraper --statement-id $2 --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-west-1:392970261554:rule/$1
-#note: for add-permission we need to change function-name to the actual player scraper, statement-id should be unique per rule, and the source-arn should be based on the user (my ID is 3929...)
 
-#again, note that for the .json file we also want the target of rule to be the specific lambda function we want
-#also, we need to figure out how to pass arguments to the lambda function using EventBridge
-echo '[{"Id": "1","Arn": "arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper","Input":"{\"Email\": \"shanna@scu.edu\",\"Player\":\"Virat Kohli\",\"URL\":\"https://www.cricbuzz.com/live-cricket-scores/60028/ind-vs-aus-4th-test-day-4-australia-tour-of-india-2023\"}"}]' > targets.json
+#Command Line Arguments: sh lambda_sch.sh <rule name> <statement name> <game start hour> <game start date (day number)> <game start month (number)> <player> <email>
+rule=$1
+statement=$2
+day=$4
+month=$5
+hour=$3
+year=$8
+end=$(($hour + $length))
+player=$6
+email=$7
 
-#with input:  '[{"Id": "1","Arn": "arn:aws:lambda:us-west-1:392970261554:function:tester","Input":"[{\"Stuff\": \"More Stuff\"}]"}]' 
+#$6: player, $7: email
 
-aws events put-targets --rule $1 --targets file://targets.json
+#This creates a topic with a name the same as the events rule
+aws sns create-topic --name $rule
+
+#This creates a subscription to the topic that was just created with the user's email.
+aws sns subscribe --topic-arn arn:aws:sns:us-west-1:392970261554:$rule --protocol email --notification-endpoint $email
+
+
+#This creates a new event with $rule name scheduled to run every $interval minutes from the start hour for game length on the specified date
+aws events put-rule --name $rule --schedule-expression "cron(*/$interval $hour-$end $day $month ? $year)"
+
+#This adds permission for the event to run the LivePlayerScraper
+aws lambda add-permission --function-name LivePlayerScraper --statement-id $statement --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-west-1:392970261554:rule/$rule
+
+#This creates the target file for assigning the LivePlayerScraper Lambda Function as the target of this scheduled event.
+#Note: we need a way to have myTopic, myPlayer, and the URL all be variables that differ per user, not hardcoded
+echo '[{"Id": "1","Arn": "arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper","Input":"{\"Topic\": \"myTopic\",\"Player\":\"myPlayer\",\"URL\":\"https://www.cricbuzz.com/live-cricket-scores/60028/ind-vs-aus-4th-test-day-4-australia-tour-of-india-2023\"}"}]' > targets.json
+
+aws events put-targets --rule $rule --targets file://targets.json
 
 rm targets.json
 
