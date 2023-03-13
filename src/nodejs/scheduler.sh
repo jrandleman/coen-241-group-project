@@ -13,7 +13,7 @@ length=3
 
 # Rahul's details
 ID="808645845014"
-function_name="secondscraper-bashone"
+function_name="secondscraper-sns"
 region="us-east-1"
 
 

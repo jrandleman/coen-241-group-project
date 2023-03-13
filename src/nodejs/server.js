@@ -116,7 +116,7 @@ app.post('/compareData', (req, res) => {
       // const region="us-west-1"
       //// rahul's details
       const ID="808645845014"
-      const function_name="secondscraper-bashone"
+      const function_name="secondscraper-sns"
       const region="us-east-1"
       const ARN="arn:aws:lambda:" + region + ":" + ID + ":function:" + function_name //THIS CAN STAY IF SAME PERSON RUNS SERVER (SIENA)(NO NEED TO GET FROM JSON FILE)
       const safeEmail=email.replace("@","-").replace(".","-")
