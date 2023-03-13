@@ -173,29 +173,29 @@ async function main() {
 }
 
 
-main();
+// main();
 
-// export const handler = async (event, context) => {
-//   try {
-//     const results = parseData(cheerio.load(SCHEDULE_PAGE_HTML));
-//     console.log(JSON.stringify(results,null,2));
-//     return {
-//         statusCode: 200,
-//         body: JSON.stringify(results),
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Access-Control-Allow-Origin': '*', // replace * with the allowed origin
-//           'Access-Control-Allow-Headers': 'Content-Type',
-//           'Access-Control-Allow-Methods': 'GET,OPTIONS,POST'
-//         }
-//     };
-// } catch(err) {
-//     console.error(`Couldn't parse cricbuzz! Error: ${err}`);
-//     return {
-//         statusCode: 500,
-//         body: JSON.stringify({
-//             message: 'Error parsing cricbuzz!'
-//         })
-//     };
-// }
-// };
+export const handler = async (event, context) => {
+  try {
+    const results = parseData(cheerio.load(SCHEDULE_PAGE_HTML));
+    console.log(JSON.stringify(results,null,2));
+    return {
+        statusCode: 200,
+        body: JSON.stringify(results),
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // replace * with the allowed origin
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS,POST'
+        }
+    };
+} catch(err) {
+    console.error(`Couldn't parse cricbuzz! Error: ${err}`);
+    return {
+        statusCode: 500,
+        body: JSON.stringify({
+            message: 'Error parsing cricbuzz!'
+        })
+    };
+}
+};
