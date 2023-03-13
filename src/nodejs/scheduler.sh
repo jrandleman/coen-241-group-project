@@ -6,14 +6,15 @@
 #interval: how often to run (minutes) in a game, length: length of the game (hours)
 interval=5
 length=3
-
-ID="392970261554"
-function_name="LivePlayerScraper"
-region="us-west-1"
-
+#siena's details
 #ID="392970261554"
 #function_name="LivePlayerScraper"
 #region="us-west-1"
+
+# Rahul's details
+ID="808645845014"
+function_name="secondscraper-bashone"
+region="us-east-1"
 
 
 rule=$1

@@ -109,12 +109,14 @@ app.post('/compareData', (req, res) => {
 	  //ALL VARIABLES BELOW WITHOUT SPECIFIC COMMENTS MUST BE PARSED FROM SCHEDULER SCRAPER RETURN JSON
           const URL=closestMatch['url'];
 	  //const email =email //FOR TEST PURPOSES ONLY!!!
-          const ID="392970261554"
-          const function_name="LivePlayerScraper"
-          const region="us-west-1"
-          //const ID="392970261554"
-          //const function_name="LivePlayerScraper"
-          //const region="us-west-1"
+    // siena's details
+          // const ID="392970261554"
+          // const function_name="LivePlayerScraper"
+          // const region="us-west-1"
+    // rahul's details
+          const ID="808645845014"
+          const function_name="secondscraper-bashone"
+          const region="us-east-1"
           const ARN="arn:aws:lambda:" + region + ":" + ID + ":function:" + function_name //THIS CAN STAY IF SAME PERSON RUNS SERVER (SIENA)(NO NEED TO GET FROM JSON FILE)
           const safeEmail=email.replace("@","-").replace(".","-")
 	  const topic=safeEmail + (new Date().getTime() + "") //THIS WILL BE RANDOMLY-ISH GENERATED (MUST HAVE HUMAN_REASONABLE NAME THOUGH)
