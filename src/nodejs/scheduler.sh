@@ -6,7 +6,15 @@
 #interval: how often to run (minutes) in a game, length: length of the game (hours)
 interval=5
 length=3
+#siena's details
+#ID="392970261554"
+#function_name="LivePlayerScraper"
+#region="us-west-1"
 
+# Rahul's details
+ID="808645845014"
+function_name="secondscraper-sns"
+region="us-east-1"
 
 
 rule=$1
@@ -23,7 +31,7 @@ email=$8
 aws sns create-topic --name $rule > schedulerlog.txt
 
 #This creates a subscription to the topic that was just created with the user's email.
-aws sns subscribe --topic-arn arn:aws:sns:us-west-1:392970261554:$rule --protocol email --notification-endpoint $email >> schedulerlog.txt
+aws sns subscribe --topic-arn arn:aws:sns:$region:$ID:$rule --protocol email --notification-endpoint $email >> schedulerlog.txt
 
 echo "$rule $statement $minute $hour $day $month $year $email" > emailcheck
 
@@ -31,7 +39,7 @@ echo "$rule $statement $minute $hour $day $month $year $email" > emailcheck
 aws events put-rule --name $rule --schedule-expression "cron($minute/$interval $hour-$end $day $month ? $year)" >> schedulerlog.txt
 
 #This adds permission for the event to run the LivePlayerScraper
-aws lambda add-permission --function-name LivePlayerScraper --statement-id $statement --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-west-1:392970261554:rule/$rule >> schedulerlog.txt
+aws lambda add-permission --function-name $function_name --statement-id $statement --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:$region:$ID:rule/$rule >> schedulerlog.txt
 
 #This creates the target file for assigning the LivePlayerScraper Lambda Function as the target of this scheduled event.
 #Note: we need a way to have myTopic, myPlayer, and the URL all be variables that differ per user, not hardcoded

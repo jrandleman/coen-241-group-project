@@ -16,7 +16,10 @@ command to copy over the code from local machine to ec2 instance web server:
 scp -i C:\Users\venka\Downloads\hosting.pem -r C:\Users\venka\Documents\front-end\* ubuntu@ec2-54-196-225-251.compute-1.amazonaws.com:/var/www/html/
 nodejs server:
 scp -i C:\Users\venka\Downloads\hosting.pem -r C:\Users\venka\Documents\nodejs ubuntu@ec2-52-91-127-223.compute-1.amazonaws.com:/home/ubuntu/
+nodejs-ami server:
+scp -i C:\Users\venka\Downloads\hosting.pem -r C:\Users\venka\Documents\GitHub\coen-241-group-project\* ec2-user@ec2-100-25-131-231.compute-1.amazonaws.com:/home/ec2-user/coen-241-group-project
 
+FOR nodejs : dont forget to add a custom TCP route in lauchwizard : edit inbound rules (port 3000 and open to all : 0.0.0.0/0)
 you can use the above command to understand a few things
 - need the key in .pem file format
 - recursively send all the files in the folder front-end which contains all my website files (index.html, script.js, etc.)
