@@ -2,11 +2,13 @@ function compareData() {
     // get input player data
     var player = document.getElementById("player").value;
     var country = document.getElementById("country").value;
+    var email = document.getElementById("email").value;
   
     // create object to send to server
     var requestData = {
       player: player,
-      country: country
+      country: country,
+      email: email
     };
   
     // send POST request to server

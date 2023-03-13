@@ -44,7 +44,7 @@ app.use(express.json());
 app.post('/compareData', (req, res) => {
   const player = req.body.player;
   const country = req.body.country;
-  //const email=req.body.email;
+  const email=req.body.email;
 
   // read player data from data.json
   fs.readFile('data.json', 'utf8', (err, data) => {
@@ -67,7 +67,7 @@ app.post('/compareData', (req, res) => {
     // Check if the country matches
     if (playerData.country === country) {
       res.json({ playerFound: true, countryMatch: true });
-      console.log(player,country);
+      console.log(player,country,email);
       fetch('https://98azzq6cyd.execute-api.us-east-1.amazonaws.com/default/schedulescraper', {
           method: 'POST',
           headers: {
@@ -108,7 +108,7 @@ app.post('/compareData', (req, res) => {
           console.log("We actually are trying to start the script, but I don't know what you're doing.")
 	  //ALL VARIABLES BELOW WITHOUT SPECIFIC COMMENTS MUST BE PARSED FROM SCHEDULER SCRAPER RETURN JSON
           const URL=closestMatch['url'];
-	  const email="shanna@scu.edu" //FOR TEST PURPOSES ONLY!!!
+	  //const email =email //FOR TEST PURPOSES ONLY!!!
           const ARN="arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper" //THIS CAN STAY IF SAME PERSON RUNS SERVER (SIENA)(NO NEED TO GET FROM JSON FILE)
           const safeEmail=email.replace("@","-").replace(".","-")
 	  const topic=safeEmail + (new Date().getTime() + "") //THIS WILL BE RANDOMLY-ISH GENERATED (MUST HAVE HUMAN_REASONABLE NAME THOUGH)
