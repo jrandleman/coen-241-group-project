@@ -1,1 +1,0 @@
-[{"Id": "1","Arn": "arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper","Input":"{\"Topic\": \"myTopic\",\"Player\":\"myPlayer\",\"URL\":\"https://www.cricbuzz.com/live-cricket-scores/60028/ind-vs-aus-4th-test-day-4-australia-tour-of-india-2023\","ID":"random stuff"}"}]
