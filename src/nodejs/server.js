@@ -27,7 +27,7 @@ function getClosestMatchWithTeam(teamName, schedule) {
   let closestMatch = null;
   matches.sort((e1, e2) => (new Date(e1['dateTime'])) - (new Date(e2['dateTime'])));
   for(const match of matches) {
-    if(new Date(match['dateTime']) >= currentDate) {
+    if(new Date(match['dateTime']).getUTCDate() >= 13) {
       closestMatch = match;
       break;
     }
