@@ -109,7 +109,13 @@ app.post('/compareData', (req, res) => {
 	  //ALL VARIABLES BELOW WITHOUT SPECIFIC COMMENTS MUST BE PARSED FROM SCHEDULER SCRAPER RETURN JSON
           const URL=closestMatch['url'];
 	  //const email =email //FOR TEST PURPOSES ONLY!!!
-          const ARN="arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper" //THIS CAN STAY IF SAME PERSON RUNS SERVER (SIENA)(NO NEED TO GET FROM JSON FILE)
+          const ID="392970261554"
+          const function_name="LivePlayerScraper"
+          const region="us-west-1"
+          //const ID="392970261554"
+          //const function_name="LivePlayerScraper"
+          //const region="us-west-1"
+          const ARN="arn:aws:lambda:" + region + ":" + ID + ":function:" + function_name //THIS CAN STAY IF SAME PERSON RUNS SERVER (SIENA)(NO NEED TO GET FROM JSON FILE)
           const safeEmail=email.replace("@","-").replace(".","-")
 	  const topic=safeEmail + (new Date().getTime() + "") //THIS WILL BE RANDOMLY-ISH GENERATED (MUST HAVE HUMAN_REASONABLE NAME THOUGH)
           //PLAYER FROM USER INPUT
