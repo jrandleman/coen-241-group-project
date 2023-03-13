@@ -23,8 +23,16 @@ function getClosestMatchWithTeam(teamName, schedule) {
   }
   if(matches.length == 0) return null;
   // Get the closest match 
+  const currentDate = new Date();
+  let closestMatch = null;
   matches.sort((e1, e2) => (new Date(e1['dateTime'])) - (new Date(e2['dateTime'])));
-  const closestMatch = matches[0];
+  for(match of matches) {
+    if(new Date(match['dateTime']) >= currentDate) {
+      closestMatch = match;
+      break;
+    }
+  }
+  if(closestMatch == null) return null;
   // Parse out the closest match's contents
   const matchDate = new Date(closestMatch['dateTime']);
   return {
