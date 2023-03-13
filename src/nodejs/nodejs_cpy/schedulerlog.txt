@@ -1,0 +1,16 @@
+{
+    "TopicArn": "arn:aws:sns:us-west-1:392970261554:shanna-scu-edu1678669019864"
+}
+{
+    "SubscriptionArn": "pending confirmation"
+}
+{
+    "RuleArn": "arn:aws:events:us-west-1:392970261554:rule/shanna-scu-edu1678669019864"
+}
+{
+    "Statement": "{\"Sid\":\"1678669019866shanna-scu-edu\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"events.amazonaws.com\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-west-1:392970261554:function:LivePlayerScraper\",\"Condition\":{\"ArnLike\":{\"AWS:SourceArn\":\"arn:aws:events:us-west-1:392970261554:rule/shanna-scu-edu1678669019864\"}}}"
+}
+{
+    "FailedEntries": [], 
+    "FailedEntryCount": 0
+}
