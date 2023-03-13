@@ -1,0 +1,21 @@
+{
+    "players": [
+      {
+        "player": "Virat Kohli",
+        "country": "India"
+      },
+      {
+        "player": "Rohit Sharma",
+        "country": "India"
+      },
+      {
+        "player": "Ravindra Jadeja",
+        "country": "India"
+      },
+      {
+        "player": "Steven Smith",
+        "country": "Australia"
+      }
+    ]
+  }
+  
